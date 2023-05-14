@@ -1,0 +1,67 @@
+HTML file :
+<html>
+<body>
+<form action="slip21_2_1.php" method="get">
+<center>
+<b>Select font style :</b><input type=text name=s1> <br>
+<b>Enter font size : </b><input type=text name=s><br>
+<b>Enter font color : </b><input type=text name=c><br>
+<b>Enter background color :</b> <input type=text name=b><br>
+<input type=submit value="Next">
+</center>
+</form>
+</body>
+</html> 
+/*------------------------------------------------*/
+
+<?php
+echo "style is ".$_GET['s1']."<br>color is ".$_GET['c']."<br>Background color is ".$_GET['b']."<br>size is ".$_GET['s'];
+setcookie("set1",$_GET['s1'],time()+3600);
+setcookie("set2",$_GET['c'],time()+3600);
+setcookie("set3",$_GET['b'],time()+3600);
+setcookie("set4",$_GET['s'],time()+3600);
+?>
+
+<html>
+<body>
+<form action="slip21_2_2.php">
+<input type=submit value=OK>
+</form>
+</body>
+</html> 
+<?php
+$style = $_COOKIE['set1'];
+$color = $_COOKIE['set2'];
+$size = $_COOKIE['set4'];
+$b_color = $_COOKIE['set3'];
+$msg = "Welcome to IP";
+echo "<body bgcolor=$b_color>";
+echo "<font face=$style color=$color size=$size>$msg";
+echo "</font></body>";
+?>
+
+/*------------------------------------------------*/
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+# Creating the dataset manually for illustration purposes
+data = {'Position': ['Intern', 'Associate', 'Manager', 'Senior Manager', 'Director', 'Senior Director', 'Executive'],
+        'Level': [1, 2, 3, 4, 5, 6, 7],
+        'Salary': [50000, 80000, 120000, 150000, 200000, 250000, 300000]}
+
+df = pd.DataFrame(data)
+
+X = df[['Level']]
+y = df['Salary']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+print("X_train:", X_train)
+print("y_train:", y_train)
+print("X_test:", X_test)
+print("y_test:", y_test)

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<movieinfo>
+  <movie no="101">
+  <title>Sooryavanshi</title>
+  <actor>akshay kumar</actor>
+  <ryear>2021</ryear>
+  </movie>
+<movie no="102">
+  <title>Simba</title>
+  <actor>Ranbir Singh</actor>
+  <ryear>2020</ryear>
+  </movie>
+<movie no="103">
+  <title>Bahubali</title>
+  <actor>Prabhas</actor>
+  <ryear>2018</ryear>
+  </movie>
+<movie no="104">
+  <title>Radhe</title>
+  <actor>Salman Khan</actor>
+  <ryear>2020</ryear>
+  </movie>
+</movieinfo>
+
+/*------------------------------------------------*/
+<?php
+$dom=new DomDocument();
+$dom->load("movie.xml");
+echo "<b>movies title</b><br>";
+$t=$dom->getElementsByTagName("title");
+foreach($t as $node)
+{
+	print $node->textContent;
+	echo "<br>";
+}
+echo "<b>actor name</b><br>";
+$t1=$dom->getElementsByTagName("actor");
+foreach($t1 as $node)
+{
+	print $node->textContent;
+	echo "<br>";
+}
+?>
+
+/*------------------------------------------------*/
+
+import pandas as pd
+import numpy as np
+from apyori import apriori
+df = pd.read_csv('/home/pc256/Desktop/Market_Basket.csv',header=None)
+print(df.head(20))
+print(df.fillna(0,inplace=True))
+transactions = []
+for i in range(0,len(df)):
+    transactions.append([str(df.values[i,j]) for j in range(0,20) if str(df.values[i,j])!='0'])
+print(transactions[0])
+rules = apriori(transactions,min_support=0.003,min_confidance=0.2,min_lift=3,min_length=2)
+print(rules)
+Results = list(rules)
+print(Results)
+df_results = pd.DataFrame(Results)
+print(df_results.head())

@@ -1,0 +1,46 @@
+<html>
+<head>
+<script type="text/javascript">
+
+function pasuser(form) {
+if (form.id.value=="ty") { 
+if (form.pass.value=="bcs") {              
+alert("welcome Login successful");
+} else {
+alert("Invalid Password")
+}
+} else {  alert("Invalid UserID")
+}
+}
+
+</script>
+</head>
+<body>
+<center>
+<form name="login">
+Login Area <br>
+UserID:<input name="id" type="text"><br><br>
+Password:<input name="pass"type="password"><br>
+<input type="button" value="Login"onClick="pasuser(this.form)">
+<input type="Reset"></form></center></body>
+/*------------------------------------------------*/
+
+import io
+import pandas as pd
+from apyori import apriori 
+df = pd.read_csv('/home/pc256/Documents/TY_SemII(21-22)/Assignment2/Market_Basket.csv')
+
+print(df.head(10))
+transactions = []
+
+for i in range(0,7501):
+#for i in range(0, 7501):
+        transactions.append([str(df.values[i,j]) for j in range(0,6)])
+from apyori import apriori
+rules = apriori(transactions, min_support = 0.50, min_confidence = 0.7, min_lift = 1.2, min_length = 2)
+
+results = list(rules)
+print(len(results))
+rules=association_rules(frequent_items, metric="confidence", min_threshold=0.5,support_only=False)
+rules = rules.sort_values(['support', 'confidence'], ascending =[False,False])
+print(rules)

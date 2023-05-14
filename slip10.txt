@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Insert Text Before and After a Paragraph</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h2>Insert Text Before and After a Paragraph</h2>
+  
+  <form id="textForm">
+    Text to Insert Before:
+    <input type="text" id="beforeText" name="beforeText"><br><br>
+    
+    Text to Insert After:
+    <input type="text" id="afterText" name="afterText"><br><br>
+    
+    <input type="submit" value="Insert Text">
+  </form>
+  
+  <p id="myParagraph">This is the original paragraph.</p>
+  
+  <script>
+    $(document).ready(function() {
+      $("#textForm").submit(function(event) {
+        event.preventDefault(); // Prevent form submission
+        
+        var beforeText = $("#beforeText").val(); // Get text to insert before
+        var afterText = $("#afterText").val(); // Get text to insert after
+        
+        // Insert text before the paragraph
+        $("#myParagraph").before("<span>" + beforeText + "</span><br><br>");
+      
+        // Insert text after the paragraph
+        $("#myParagraph").after("<br><br><span>" + afterText + "</span>");
+        
+        // Clear the form inputs
+        $("#beforeText").val("");
+        $("#afterText").val("");
+      });
+    });
+  </script>
+</body>
+</html>
+/*------------------------------------------------*/
+
+import pandas as pd
+from mlxtend.frequent_patterns import apriori, association_rules
+transactions = [['Bread','Milk'],
+['Bread','Diaper','Beer','Eggs'],
+['milk', 'Diaper','Beer','Coke'],
+['Bread', 'Milk','Diaper','Beer'],
+['Bread', 'Milk', 'Diaper','Coke']]
+print(transactions)
+from mlxtend.preprocessing import TransactionEncoder
+te=TransactionEncoder()
+te_array=te.fit(transactions).transform(transactions)
+df=pd.DataFrame(te_array, columns=te.columns_)
+print(df)
+freq_items = apriori(df, min_support = 0.5, use_colnames = True)
+print(freq_items)
+rules = association_rules(freq_items, metric ='support', min_threshold=0.05)
+rules = rules.sort_values(['support', 'confidence'], ascending =[False,False])
+print(rules)

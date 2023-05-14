@@ -1,0 +1,62 @@
+<html>
+<body bgcolor='pink'>
+<form action="a5_a1.php" method="GET">
+
+<br>
+<input type='submit' value='OK'>
+</form>
+</body>
+</html>
+//it is save as a5_a1.php
+
+/*------------------------------------------------*/
+<?php
+session_start();
+if(isset($_SESSION['cnt']))
+{
+  $_SESSION['cnt']+=1;
+}
+else
+{
+$_SESSION['cnt']=1;
+}
+echo "you have visited the page".$_SESSION['cnt']."times";
+echo "<a href=a5_a1.php> click here</a>";
+?>
+//it is save as a5_a1.php
+
+
+/*------------------------------------------------*/
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+# Create the 'Position_Salaries' dataset
+position_level = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+salary = np.array([45000, 50000, 60000, 80000, 110000, 150000, 200000, 300000, 500000, 1000000])
+
+# Split the variables into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(position_level.reshape(-1, 1), salary, test_size=0.3, random_state=42)
+
+# Print the training and testing sets
+print("Training set:")
+print("Position Level:", X_train.flatten())
+print("Salary:", y_train)
+print("\nTesting set:")
+print("Position Level:", X_test.flatten())
+print("Salary:", y_test)
+
+# Build a simple linear regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predict salaries using the linear regression model
+y_train_pred = model.predict(X_train)
+y_test_pred = model.predict(X_test)
+
+# Print the predicted salaries for the testing set
+print("\nPredicted Salaries for the Testing set:")
+for i in range(len(X_test)):
+    print("Position Level:", X_test[i][0])
+    print("Predicted Salary:", y_test_pred[i])
+    print()

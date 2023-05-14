@@ -1,0 +1,83 @@
+<html>
+<body>
+<form method="POST" action="o1.php">
+
+Enter UserName:
+<input type="text" name="txt1" id="txt1">
+<br>
+Enter Password:<input type="text" name="txt2" id="txt2">
+<br>
+
+<input type="submit" value="login"">
+
+</form>
+</body>
+</html>
+//it is save as a.html 
+
+
+/*------------------------------------------------*/
+<?php
+session_start();
+
+if(!isset($_SESSION['count']))
+$_SESSION['count']=0;
+
+
+
+
+$username=$_POST['txt1'];
+$password=$_POST['txt2'];
+
+			if($username==""&&$password=="")
+			  {
+					echo"Enter All Details";
+			}
+
+			if($username=="ty"&&$password=="123456")
+			{
+					echo"login Successfull";
+					$_SESSION['count']=0;
+			}
+                        else 
+    		{     
+                         $_SESSION['count']=$_SESSION['count']+1;
+                      
+			if($_SESSION['count']>2)
+			{
+			echo ("You Exceeded the Limit...ie,3");
+			$_SESSION['count']=0;
+ 			
+			}
+			else
+			{
+		echo"Login Failed ... Wrong Details Entered... attempts made:". $_SESSION['count'];
+			include('a.html');
+			}
+		}
+// it is save as o1.php
+
+
+/*------------------------------------------------*/
+
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn import metrics
+import seaborn as sn
+import matplotlib.pyplot as plt
+dataset = pd.read_csv("/home/pc256/CSV/User_Data.csv") 
+x = dataset.iloc[:, [2,3]].values #enables us to select a particular cell of the dataset, 
+y = dataset.iloc[:, 4].values
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.25,random_state=0)   # We will split our model into 25% testing and 75 % for training model.
+logistic_regression= LogisticRegression()
+logistic_regression.fit(x_train,y_train)
+y_pred=logistic_regression.predict(x_test)
+confusion_matrix = pd.crosstab(y_test, y_pred, rownames=['Actual'], colnames=['Predicted'])
+sn.heatmap(confusion_matrix, annot=True)
+print('Accuracy: ',metrics.accuracy_score(y_test, y_pred))
+plt.show()
+
+print (x_test)
+print (y_pred)

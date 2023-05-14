@@ -1,0 +1,59 @@
+<Bookstore>
+  <Yoga>
+    <Book>
+      <Book_Title>Yoga for Beginners</Book_Title>
+      <Book_Author>John Smith</Book_Author>
+      <Book_Price>19.99</Book_Price>
+    </Book>
+    <Book>
+      <Book_Title>Advanced Yoga Techniques</Book_Title>
+      <Book_Author>Emily Davis</Book_Author>
+      <Book_Price>24.99</Book_Price>
+    </Book>
+  </Yoga>
+  <Story>
+    <Book>
+      <Book_Title>The Adventures of Tom Sawyer</Book_Title>
+      <Book_Author>Mark Twain</Book_Author>
+      <Book_Price>14.99</Book_Price>
+    </Book>
+    <Book>
+      <Book_Title>Alice's Adventures in Wonderland</Book_Title>
+      <Book_Author>Lewis Carroll</Book_Author>
+      <Book_Price>12.99</Book_Price>
+    </Book>
+  </Story>
+  <Technical>
+    <Book>
+      <Book_Title>Python Programming for Beginners</Book_Title>
+      <Book_Author>Sarah Johnson</Book_Author>
+      <Book_Price>29.99</Book_Price>
+    </Book>
+    <Book>
+      <Book_Title>Data Science Essentials</Book_Title>
+      <Book_Author>Michael Smith</Book_Author>
+      <Book_Price>34.99</Book_Price>
+    </Book>
+  </Technical>
+</Bookstore>
+
+
+/*------------------------------------------------*/
+import pandas as pd
+from mlxtend.frequent_patterns import apriori, association_rules
+transactions = [['Bread','Milk'],
+['Bread','Diaper','Beer','Eggs'],
+['milk', 'Diaper','Beer','Coke'],
+['Bread', 'Milk','Diaper','Beer'],
+['Bread', 'Milk', 'Diaper','Coke']]
+print(transactions)
+from mlxtend.preprocessing import TransactionEncoder
+te=TransactionEncoder()
+te_array=te.fit(transactions).transform(transactions)
+df=pd.DataFrame(te_array, columns=te.columns_)
+print(df)
+freq_items = apriori(df, min_support = 0.5, use_colnames = True)
+print(freq_items)
+rules = association_rules(freq_items, metric ='support', min_threshold=0.05)
+rules = rules.sort_values(['support', 'confidence'], ascending =[False,False])
+print(rules)

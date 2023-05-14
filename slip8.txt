@@ -1,0 +1,75 @@
+<html>
+<script type="text/javascript">
+function disp()
+{
+  var msg=document.getElementById("t1");
+   alert("hello "+msg.value+" exams are near you have to study");
+}
+function getConfirmation( )
+{
+ var retval=confirm("Do you want to continue?" );
+ if(retval==true)
+{
+alert("hello exams are near you have to study");
+
+}
+else
+{
+alert("hello exams are over");
+
+}
+}
+function prm( )
+{ 
+var fname=prompt("Hello!  Whats your name");
+alert("hello "+fname.value+" exams are near you have to study");
+}
+
+</script>
+<body>
+<input type=text id="t1"><br>
+<input type=submit onclick="disp()" value="alert">
+<input type=submit onclick="getConfirmation()" value="confirm">
+<input type=submit onclick="prm( )" value="prompt">
+</body>
+</html>
+
+
+/*------------------------------------------------*/
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.metrics import association_rules
+
+# Read the dataset
+df = pd.read_csv('groceries_dataset.csv')
+
+# Display dataset information
+print("Dataset Information:")
+print(df.info())
+print()
+
+# Drop null values
+df.dropna(inplace=True)
+
+# Preprocess categorical values
+categorical_cols = df.select_dtypes(include=['object']).columns
+label_encoder = LabelEncoder()
+
+for col in categorical_cols:
+    df[col] = label_encoder.fit_transform(df[col])
+
+one_hot_encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
+df_encoded = pd.DataFrame(one_hot_encoder.fit_transform(df), columns=one_hot_encoder.get_feature_names(df.columns))
+
+# Apply Apriori algorithm
+frequent_itemsets = association_rules(df_encoded, metric="support", min_threshold=0.01)
+
+# Display frequent itemsets
+print("Frequent Itemsets:")
+print(frequent_itemsets)
+print()
+
+# Display association rules
+print("Association Rules:")
+print(frequent_itemsets[['antecedents', 'consequents', 'support', 'confidence', 'lift']])
